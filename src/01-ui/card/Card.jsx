@@ -5,7 +5,7 @@ export function Card({ children, className, glowing, onClick, ...props }) {
     <div
       className={clsx(
         "bg-card border border-border rounded-xl overflow-hidden transition-all",
-        glowing && "ring-2 ring-accent/50 border-accent/30",
+        glowing && "drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]",
         onClick && "cursor-pointer",
         className
       )}

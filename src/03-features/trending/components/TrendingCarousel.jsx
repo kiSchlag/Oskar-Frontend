@@ -17,7 +17,21 @@ export function TrendingCarousel({ isFavorite, onToggleFavorite }) {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-text">Trending</h2>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => scroll(-1)}
+              className="bg-card text-text-muted hover:text-text w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+              aria-label="Scroll left"
+            >
+              ‹
+            </button>
+            <button
+              onClick={() => scroll(1)}
+              className="bg-card text-text-muted hover:text-text w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+              aria-label="Scroll right"
+            >
+              ›
+            </button>
             {["day", "week"].map((tw) => (
               <button
                 key={tw}
@@ -34,17 +48,10 @@ export function TrendingCarousel({ isFavorite, onToggleFavorite }) {
           </div>
         </div>
 
-        <div className="relative group/carousel">
-          <button
-            onClick={() => scroll(-1)}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-dark/80 hover:bg-card text-text w-10 h-10 rounded-full hidden md:flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity"
-            aria-label="Scroll left"
-          >
-            ‹
-          </button>
+        <div className="relative">
           <div
             ref={scrollRef}
-            className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x"
+            className="flex gap-4 overflow-x-auto p-4 scrollbar-hide snap-x"
           >
             {loading
               ? Array.from({ length: 8 }).map((_, i) => (
@@ -69,13 +76,6 @@ export function TrendingCarousel({ isFavorite, onToggleFavorite }) {
                   );
                 })}
           </div>
-          <button
-            onClick={() => scroll(1)}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-dark/80 hover:bg-card text-text w-10 h-10 rounded-full hidden md:flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity"
-            aria-label="Scroll right"
-          >
-            ›
-          </button>
         </div>
       </div>
     </section>

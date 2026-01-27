@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import clsx from "clsx";
 import { Card } from "@/01-ui";
 import { LazyImage } from "@/02-shared/components/lazy-image";
 import { posterUrl } from "@/02-shared/constants";
@@ -10,18 +9,15 @@ export function MediaCard({ item, mediaType, isFavorited, onToggleFavorite }) {
   const date = item.release_date || item.first_air_date;
   const imgSrc = posterUrl(item.poster_path);
 
-  const handleFavorite = useCallback(
-    (e) => {
-      e.stopPropagation();
-      onToggleFavorite?.(item, mediaType);
-    },
-    [item, mediaType, onToggleFavorite]
-  );
+  const handleClick = useCallback(() => {
+    onToggleFavorite?.(item, mediaType);
+  }, [item, mediaType, onToggleFavorite]);
 
   return (
     <Card
       glowing={isFavorited}
-      className="group relative hover:scale-[1.03] transition-transform duration-200"
+      onClick={handleClick}
+      className="group relative hover:scale-[1.03] transition-transform duration-200 cursor-pointer"
       data-media-type={mediaType}
       data-media-id={item.id}
     >
@@ -48,19 +44,6 @@ export function MediaCard({ item, mediaType, isFavorited, onToggleFavorite }) {
           </div>
         </div>
       </div>
-
-      <button
-        onClick={handleFavorite}
-        className={clsx(
-          "absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100",
-          isFavorited
-            ? "bg-accent text-white opacity-100"
-            : "bg-black/50 text-white hover:bg-accent"
-        )}
-        aria-label={isFavorited ? "Remove from journal" : "Add to journal"}
-      >
-        ♥
-      </button>
     </Card>
   );
 }

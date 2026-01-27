@@ -11,7 +11,7 @@ export function ToastContainer() {
           key={toast.id}
           className={clsx(
             "px-4 py-3 rounded-lg shadow-lg text-sm font-medium flex items-center gap-3 animate-slide-in-right min-w-[280px]",
-            toast.type === "success" && "bg-green-600 text-white",
+            toast.type === "success" && "bg-green-800 text-white",
             toast.type === "error" && "bg-red-600 text-white",
             toast.type === "info" && "bg-accent text-white"
           )}
