@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark: #0a0a0f;
+  --color-darker: #050508;
+  --color-card: #12121a;
+  --color-border: #1e1e2e;
+  --color-accent: #6366f1;
+  --color-accent-hover: #818cf8;
+  --color-text: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-dark text-text font-sans antialiased;
+  }
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
