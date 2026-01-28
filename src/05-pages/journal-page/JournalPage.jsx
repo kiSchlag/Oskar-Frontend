@@ -1,8 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { Spinner } from "@/01-ui";
-import { useToast } from "@/02-shared/context";
-import { useFavorites, EmptyState, JournalSlate } from "@/03-features/journal";
-import { removeFavorite } from "@/03-features/journal";
+import { useToast, useFavorites } from "@/02-shared/context";
+import { EmptyState, JournalSlate, removeFavorite } from "@/03-features/journal";
 
 export default function JournalPage() {
   const { favorites, loading, refetch } = useFavorites();

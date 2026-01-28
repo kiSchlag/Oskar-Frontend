@@ -7,7 +7,7 @@ import { apiFetch } from "@/02-shared/utils";
 import { HOME, JOURNAL } from "@/02-shared/constants";
 import { SearchDropdown } from "./SearchDropdown";
 
-export function Navbar() {
+export function Navbar({ isFavorite, onToggleFavorite }) {
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -37,11 +37,20 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleSelect = useCallback((item) => {
-    setShowDropdown(false);
-    setQuery("");
-    setResults([]);
-  }, []);
+  const handleSelect = useCallback(
+    (item) => {
+      const isMedia = item.media_type === "movie" || item.media_type === "tv";
+
+      if (isMedia && onToggleFavorite) {
+        onToggleFavorite(item, item.media_type);
+      } else {
+        setShowDropdown(false);
+        setQuery("");
+        setResults([]);
+      }
+    },
+    [onToggleFavorite]
+  );
 
   return (
     <nav
@@ -65,7 +74,7 @@ export function Navbar() {
             className="text-sm"
           />
           {showDropdown && (
-            <SearchDropdown results={results} onSelect={handleSelect} />
+            <SearchDropdown results={results} onSelect={handleSelect} isFavorite={isFavorite} />
           )}
         </div>
 

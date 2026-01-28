@@ -2,7 +2,7 @@ import { HeroSection, TrendingCarousel } from "@/03-features/trending";
 import { PopularMoviesGrid } from "@/03-features/movies";
 import { PopularTVGrid } from "@/03-features/tv";
 import { PopularPeopleCarousel } from "@/03-features/people";
-import { useFavorites } from "@/03-features/journal";
+import { useFavorites } from "@/02-shared/context";
 
 export default function HomePage() {
   const { isFavorite, toggleFavorite } = useFavorites();
