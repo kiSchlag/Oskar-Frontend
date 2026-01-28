@@ -1,10 +1,12 @@
-import { ToastProvider } from "@/02-shared/context";
+import { ToastProvider, FavoritesProvider } from "@/02-shared/context";
 import AppRoutes from "./routes";
 
 export default function App() {
   return (
     <ToastProvider>
-      <AppRoutes />
+      <FavoritesProvider>
+        <AppRoutes />
+      </FavoritesProvider>
     </ToastProvider>
   );
 }
