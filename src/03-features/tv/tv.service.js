@@ -11,3 +11,7 @@ export function fetchTVDetails(id) {
 export function fetchTVGenres() {
   return apiFetch("/tmdb/genres/tv");
 }
+
+export function fetchTVCredits(id) {
+  return apiFetch(`/tmdb/tv/${id}/credits`);
+}
