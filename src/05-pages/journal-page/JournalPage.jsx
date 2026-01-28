@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { Spinner } from "@/01-ui";
 import { useToast } from "@/02-shared/context";
-import { useFavorites, EmptyState, FavoriteCard } from "@/03-features/journal";
+import { useFavorites, EmptyState, JournalSlate } from "@/03-features/journal";
 import { removeFavorite } from "@/03-features/journal";
 
 export default function JournalPage() {
@@ -47,9 +47,9 @@ export default function JournalPage() {
       {favorites.length === 0 ? (
         <EmptyState />
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="flex flex-col gap-4">
           {favorites.map((fav) => (
-            <FavoriteCard key={fav.id} favorite={fav} onRemove={handleRemove} />
+            <JournalSlate key={fav.id} favorite={fav} onRemove={handleRemove} />
           ))}
         </div>
       )}
