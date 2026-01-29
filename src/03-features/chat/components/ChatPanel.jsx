@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { Input, Spinner } from "@/01-ui";
+import { useFavorites } from "@/02-shared/context";
 import { useChat } from "../use-chat";
 import { ChatMessage } from "./ChatMessage";
 
 export function ChatPanel({ onClose }) {
   const { messages, loading, sendMessage, clearSession } = useChat();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
 
@@ -21,7 +23,7 @@ export function ChatPanel({ onClose }) {
   };
 
   return (
-    <div className="fixed bottom-20 right-6 w-96 max-w-[calc(100vw-2rem)] h-[500px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden">
+    <div className="fixed bottom-20 right-6 w-[560px] max-w-[calc(100vw-2rem)] h-[650px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-darker">
         <div>
           <h3 className="text-text font-semibold text-sm">Oskar</h3>
@@ -53,7 +55,12 @@ export function ChatPanel({ onClose }) {
           </p>
         )}
         {messages.map((msg, i) => (
-          <ChatMessage key={i} message={msg} />
+          <ChatMessage
+            key={i}
+            message={msg}
+            isFavorite={isFavorite}
+            onToggleFavorite={toggleFavorite}
+          />
         ))}
         {loading && (
           <div className="flex justify-start">
