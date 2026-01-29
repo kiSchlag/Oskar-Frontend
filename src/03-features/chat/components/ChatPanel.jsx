@@ -23,7 +23,7 @@ export function ChatPanel({ onClose }) {
   };
 
   return (
-    <div className="fixed bottom-20 right-6 w-96 max-w-[calc(100vw-2rem)] h-[500px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden">
+    <div className="fixed bottom-20 right-6 w-[560px] max-w-[calc(100vw-2rem)] h-[650px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-darker">
         <div>
           <h3 className="text-text font-semibold text-sm">Oskar</h3>

@@ -1,4 +1,4 @@
-import { Card, Badge } from "@/01-ui";
+import { Card } from "@/01-ui";
 import { LazyImage } from "@/02-shared/components/lazy-image";
 import { posterUrl } from "@/02-shared/constants";
 import {
@@ -24,7 +24,7 @@ export function ChatMediaCard({
     number_of_seasons,
   } = recommendation;
 
-  const imgSrc = posterUrl(poster_path, "w154");
+  const imgSrc = posterUrl(poster_path, "w342");
   const year = formatDate(release_date);
   const rating = formatRating(vote_average);
   const duration =
@@ -37,45 +37,53 @@ export function ChatMediaCard({
     <Card
       glowing={isFavorited}
       onClick={onToggleFavorite}
-      className="mt-3 flex items-stretch gap-3 p-2 hover:bg-border/30 transition-colors"
+      className="cursor-pointer w-40"
     >
-      <div className="w-16 h-24 shrink-0 rounded overflow-hidden">
+      <div className="aspect-[2/3] relative overflow-hidden">
         <LazyImage
           src={imgSrc}
           alt={title}
           className="w-full h-full object-cover"
         />
-      </div>
 
-      <div className="flex-1 min-w-0 flex flex-col justify-center gap-1">
-        <h4 className="text-text font-medium text-sm truncate">{title}</h4>
+        {/* Gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-        <div className="flex items-center gap-2 text-xs text-text-muted">
-          {year && <span>{year}</span>}
-          {vote_average > 0 && (
-            <span className="text-yellow-400">★ {rating}</span>
-          )}
-          {duration && (
-            <>
-              <span className="text-border">·</span>
-              <span>{duration}</span>
-            </>
-          )}
-        </div>
-
-        {displayGenres.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-0.5">
-            {displayGenres.map((genre) => (
-              <Badge key={genre} className="text-[10px] px-1.5 py-0">
-                {genre}
-              </Badge>
-            ))}
+        {/* Rating badge - top right */}
+        {vote_average > 0 && (
+          <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1">
+            <span className="text-yellow-400 text-sm">★</span>
+            <span className="text-white text-sm font-medium">{rating}</span>
           </div>
         )}
 
-        <p className="text-[10px] text-text-muted mt-1">
-          {isFavorited ? "Click to remove from journal" : "Click to add to journal"}
-        </p>
+        {/* Metadata overlay - bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-3">
+          <h4 className="text-white font-semibold text-sm leading-tight truncate">
+            {title}
+          </h4>
+          <div className="flex items-center gap-2 text-xs text-white/80 mt-1">
+            {year && <span>{year}</span>}
+            {duration && (
+              <>
+                <span className="text-white/50">·</span>
+                <span>{duration}</span>
+              </>
+            )}
+          </div>
+          {displayGenres.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-2">
+              {displayGenres.map((genre) => (
+                <span
+                  key={genre}
+                  className="text-[10px] px-1.5 py-0.5 bg-white/20 rounded text-white/90"
+                >
+                  {genre}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </Card>
   );
