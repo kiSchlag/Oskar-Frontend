@@ -87,38 +87,38 @@ export function ChatMediaCard({
     >
       <div className="flex">
         {/* Left Column - Poster */}
-        <div className="w-28 shrink-0">
-          <div className="aspect-[2/3] relative overflow-hidden">
-            <LazyImage
-              src={imgSrc}
-              alt={title}
-              className="w-full h-full object-cover"
-            />
-            {vote_average > 0 && (
-              <div className="absolute top-1.5 right-1.5 bg-black/70 backdrop-blur-sm rounded px-1.5 py-0.5 flex items-center gap-0.5">
-                <span className="text-yellow-400 text-xs">★</span>
-                <span className="text-white text-xs font-medium">{rating}</span>
-              </div>
-            )}
-          </div>
+        <div className="w-28 shrink-0 relative min-h-[168px]">
+          <LazyImage
+            src={imgSrc}
+            alt={title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         </div>
 
         {/* Right Column - Details */}
         <div className="flex-1 p-3 flex flex-col min-w-0 gap-2">
           {/* Header */}
-          <div>
-            <h4 className="text-text font-semibold text-sm leading-tight truncate">
-              {title}
-            </h4>
-            <div className="flex items-center gap-2 text-xs text-text-muted mt-0.5">
-              {year && <span>{year}</span>}
-              {duration && (
-                <>
-                  <span className="text-text-muted/50">·</span>
-                  <span>{duration}</span>
-                </>
-              )}
+          <div className="flex justify-between items-start gap-2">
+            <div className="min-w-0">
+              <h4 className="text-text font-semibold text-sm leading-tight truncate">
+                {title}
+              </h4>
+              <div className="flex items-center gap-2 text-xs text-text-muted mt-0.5">
+                {year && <span>{year}</span>}
+                {duration && (
+                  <>
+                    <span className="text-text-muted/50">·</span>
+                    <span>{duration}</span>
+                  </>
+                )}
+              </div>
             </div>
+            {vote_average > 0 && (
+              <div className="shrink-0 flex items-center gap-0.5">
+                <span className="text-yellow-400 text-xs">★</span>
+                <span className="text-text text-xs font-medium">{rating}</span>
+              </div>
+            )}
           </div>
 
           {/* Badges */}
