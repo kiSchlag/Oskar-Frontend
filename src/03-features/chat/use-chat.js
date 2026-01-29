@@ -18,7 +18,11 @@ export function useChat() {
         setSessionId(res.session_id);
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: res.response },
+          {
+            role: "assistant",
+            content: res.response,
+            mediaRecommendation: res.media_recommendation || null,
+          },
         ]);
       } catch {
         setMessages((prev) => [

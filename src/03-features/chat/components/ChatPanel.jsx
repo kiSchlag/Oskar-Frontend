@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { Input, Spinner } from "@/01-ui";
+import { useFavorites } from "@/02-shared/context";
 import { useChat } from "../use-chat";
 import { ChatMessage } from "./ChatMessage";
 
 export function ChatPanel({ onClose }) {
   const { messages, loading, sendMessage, clearSession } = useChat();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
 
@@ -53,7 +55,12 @@ export function ChatPanel({ onClose }) {
           </p>
         )}
         {messages.map((msg, i) => (
-          <ChatMessage key={i} message={msg} />
+          <ChatMessage
+            key={i}
+            message={msg}
+            isFavorite={isFavorite}
+            onToggleFavorite={toggleFavorite}
+          />
         ))}
         {loading && (
           <div className="flex justify-start">
