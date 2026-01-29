@@ -1,0 +1,19 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+*.local
+
+# Editor/Tools
+.claude/
+.vscode/
+.idea/
+.DS_Store
+
