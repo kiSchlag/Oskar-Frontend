@@ -1,18 +1,58 @@
 import { useState, useRef, useEffect } from "react";
 import { Input, Spinner } from "@/01-ui";
-import { useFavorites } from "@/02-shared/context";
+import { useFavorites, useToast } from "@/02-shared/context";
 import { useChat } from "../use-chat";
 import { ChatMessage } from "./ChatMessage";
 
+function getFavoritesToastMessage(items, action) {
+  const count = items.length;
+  if (count === 0) return null;
+
+  if (count === 1) {
+    const title = items[0].title;
+    return action === "added"
+      ? `Added "${title}" to your journal`
+      : `Removed "${title}" from your journal`;
+  }
+
+  return action === "added"
+    ? `Added ${count} movies to your journal`
+    : `Removed ${count} movies from your journal`;
+}
+
 export function ChatPanel({ onClose }) {
-  const { messages, loading, sendMessage, clearSession } = useChat();
-  const { isFavorite, toggleFavorite } = useFavorites();
+  const { messages, loading, sendMessage, clearSession, favoritesChanges, clearFavoritesChanges } = useChat();
+  const { isFavorite, toggleFavorite, refetch } = useFavorites();
+  const { addToast } = useToast();
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (!favoritesChanges) return;
+
+    const { items } = favoritesChanges;
+
+    refetch();
+
+    if (items && items.length > 0) {
+      const addedItems = items.filter(item => item.action === "added");
+      const removedItems = items.filter(item => item.action === "removed");
+
+      if (addedItems.length > 0) {
+        addToast(getFavoritesToastMessage(addedItems, "added"), "success");
+      }
+
+      if (removedItems.length > 0) {
+        addToast(getFavoritesToastMessage(removedItems, "removed"), "info");
+      }
+    }
+
+    clearFavoritesChanges();
+  }, [favoritesChanges, refetch, addToast, clearFavoritesChanges]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

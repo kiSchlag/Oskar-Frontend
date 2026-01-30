@@ -6,12 +6,14 @@ export function useChat() {
   const [sessionId, setSessionId] = useLocalStorage("filmzimmer-chat-session", null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [favoritesChanges, setFavoritesChanges] = useState(null);
 
   const sendMessage = useCallback(
     async (text) => {
       const userMsg = { role: "user", content: text };
       setMessages((prev) => [...prev, userMsg]);
       setLoading(true);
+      setFavoritesChanges(null);
 
       try {
         const res = await sendChatMessage(text, sessionId);
@@ -24,11 +26,13 @@ export function useChat() {
             mediaRecommendation: res.media_recommendation || null,
           },
         ]);
+        setFavoritesChanges(res.favorites_changes || null);
       } catch {
         setMessages((prev) => [
           ...prev,
           { role: "assistant", content: "Sorry, something went wrong. Please try again." },
         ]);
+        setFavoritesChanges(null);
       } finally {
         setLoading(false);
       }
@@ -44,7 +48,12 @@ export function useChat() {
     }
     setSessionId(null);
     setMessages([]);
+    setFavoritesChanges(null);
   }, [sessionId, setSessionId]);
 
-  return { messages, loading, sendMessage, clearSession };
+  const clearFavoritesChanges = useCallback(() => {
+    setFavoritesChanges(null);
+  }, []);
+
+  return { messages, loading, sendMessage, clearSession, favoritesChanges, clearFavoritesChanges };
 }
