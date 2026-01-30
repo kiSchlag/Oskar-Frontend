@@ -22,7 +22,7 @@ function getFavoritesToastMessage(items, action) {
 
 export function ChatPanel({ onClose }) {
   const { messages, loading, sendMessage, clearSession, favoritesChanges, clearFavoritesChanges } = useChat();
-  const { isFavorite, toggleFavorite, refetch } = useFavorites();
+  const { isFavorite, toggleFavorite, invalidateFavorites } = useFavorites();
   const { addToast } = useToast();
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
@@ -36,7 +36,7 @@ export function ChatPanel({ onClose }) {
 
     const { items } = favoritesChanges;
 
-    refetch();
+    invalidateFavorites();
 
     if (items && items.length > 0) {
       const addedItems = items.filter(item => item.action === "added");
@@ -52,7 +52,7 @@ export function ChatPanel({ onClose }) {
     }
 
     clearFavoritesChanges();
-  }, [favoritesChanges, refetch, addToast, clearFavoritesChanges]);
+  }, [favoritesChanges, invalidateFavorites, addToast, clearFavoritesChanges]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
