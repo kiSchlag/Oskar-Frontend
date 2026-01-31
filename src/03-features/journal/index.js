@@ -11,7 +11,6 @@ export {
   deleteNote,
 } from "./journal.service";
 export { useFavorites } from "./use-favorites";
-export { useNotes } from "./use-notes";
 export {
   FavoriteCard,
   NoteEditor,

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Input, Spinner } from "@/01-ui";
 import { useFavorites, useToast } from "@/02-shared/context";
+import { useInvalidateNotes } from "@/02-shared/hooks";
 import { useChat } from "../use-chat";
 import { ChatMessage } from "./ChatMessage";
 
@@ -20,9 +21,32 @@ function getFavoritesToastMessage(items, action) {
     : `Removed ${count} movies from your journal`;
 }
 
+function getNotesToastMessage(createdCount, updatedCount) {
+  if (createdCount > 0 && updatedCount > 0) {
+    return `Added ${createdCount} note${createdCount > 1 ? "s" : ""} and updated ${updatedCount} note${updatedCount > 1 ? "s" : ""}`;
+  }
+  if (createdCount > 0) {
+    return createdCount === 1 ? "Added a new note" : `Added ${createdCount} new notes`;
+  }
+  if (updatedCount > 0) {
+    return updatedCount === 1 ? "Updated a note" : `Updated ${updatedCount} notes`;
+  }
+  return null;
+}
+
 export function ChatPanel({ onClose }) {
-  const { messages, loading, sendMessage, clearSession, favoritesChanges, clearFavoritesChanges } = useChat();
+  const {
+    messages,
+    loading,
+    sendMessage,
+    clearSession,
+    favoritesChanges,
+    clearFavoritesChanges,
+    notesChanges,
+    clearNotesChanges,
+  } = useChat();
   const { isFavorite, toggleFavorite, invalidateFavorites } = useFavorites();
+  const invalidateNotes = useInvalidateNotes();
   const { addToast } = useToast();
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
@@ -53,6 +77,30 @@ export function ChatPanel({ onClose }) {
 
     clearFavoritesChanges();
   }, [favoritesChanges, invalidateFavorites, addToast, clearFavoritesChanges]);
+
+  useEffect(() => {
+    if (!notesChanges) return;
+
+    const { items, created_count, updated_count } = notesChanges;
+
+    if (items && items.length > 0) {
+      const seen = new Set();
+      items.forEach((item) => {
+        const key = `${item.media_type}-${item.media_id}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          invalidateNotes(item.media_type, item.media_id);
+        }
+      });
+    }
+
+    const toastMessage = getNotesToastMessage(created_count, updated_count);
+    if (toastMessage) {
+      addToast(toastMessage, "success");
+    }
+
+    clearNotesChanges();
+  }, [notesChanges, invalidateNotes, addToast, clearNotesChanges]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

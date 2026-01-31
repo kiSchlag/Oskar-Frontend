@@ -8,8 +8,7 @@ import {
   formatRuntime,
   formatSeasons,
 } from "@/02-shared/utils";
-import { useMediaDetails, useMediaCredits } from "@/02-shared/hooks";
-import { useNotes } from "../use-notes";
+import { useMediaDetails, useMediaCredits, useNotesQuery } from "@/02-shared/hooks";
 import { NoteEditor } from "./NoteEditor";
 import { CastStrip } from "./CastStrip";
 
@@ -23,7 +22,7 @@ export function JournalSlate({ favorite, onRemove }) {
     favorite.media_id,
     true
   );
-  const { notes, saveNote } = useNotes(favorite.media_type, favorite.media_id);
+  const { notes, saveNote } = useNotesQuery(favorite.media_type, favorite.media_id);
   const note = notes[0] || null;
 
   const handleRemove = useCallback(
