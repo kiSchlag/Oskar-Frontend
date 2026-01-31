@@ -3,15 +3,14 @@ import { Card } from "@/01-ui";
 import { LazyImage } from "@/02-shared/components/lazy-image";
 import { posterUrl } from "@/02-shared/constants";
 import { formatDate, formatRating } from "@/02-shared/utils";
-import { useHoverIntent } from "@/02-shared/hooks";
+import { useHoverIntent, useNotesQuery } from "@/02-shared/hooks";
 import { HoverCard } from "@/03-features/movies/components/HoverCard";
-import { useNotes } from "../use-notes";
 import { NoteEditor } from "./NoteEditor";
 
 export function FavoriteCard({ favorite, details, onRemove }) {
   const title = favorite.title;
   const imgSrc = posterUrl(favorite.poster_path);
-  const { notes, saveNote } = useNotes(favorite.media_type, favorite.media_id);
+  const { notes, saveNote } = useNotesQuery(favorite.media_type, favorite.media_id);
   const note = notes[0] || null;
 
   const {

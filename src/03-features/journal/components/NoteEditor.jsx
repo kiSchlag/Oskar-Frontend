@@ -6,6 +6,12 @@ export function NoteEditor({ note, onSave }) {
   const debouncedContent = useDebounce(content, 800);
   const savedRef = useRef(note?.content || "");
 
+  // Sync local state when note prop changes (from API fetch or real-time update)
+  useEffect(() => {
+    setContent(note?.content || "");
+    savedRef.current = note?.content || "";
+  }, [note?.content]);
+
   useEffect(() => {
     if (debouncedContent && debouncedContent !== savedRef.current) {
       onSave(debouncedContent, note?.id || null);
