@@ -30,7 +30,7 @@ function SearchResultItem({ item, onSelect, isFavorited }) {
         key={`${item.media_type}-${item.id}`}
         onClick={() => onSelect(item)}
         className={clsx(
-          "w-full flex items-center gap-3 px-4 py-3 hover:bg-border/50 transition-colors text-left",
+          "w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors text-left",
           isFavorited && "drop-shadow-[0_0_15px_rgba(168,85,247,0.6)] bg-purple-500/10"
         )}
         onMouseEnter={isMedia ? handleMouseEnter : undefined}
@@ -86,7 +86,7 @@ export function SearchDropdown({ results, onSelect, isFavorite }) {
   if (!results || results.length === 0) return null;
 
   return (
-    <div className="absolute top-full left-0 right-0 mt-1 bg-card border border-border rounded-xl shadow-2xl max-h-96 overflow-y-auto z-50">
+    <div className="absolute top-full left-0 right-0 mt-2 bg-dark/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl max-h-96 overflow-y-auto z-50">
       {results.map((item) => {
         const isMedia = item.media_type === "movie" || item.media_type === "tv";
         const isFavorited = isMedia && isFavorite?.(item.media_type, item.id);
