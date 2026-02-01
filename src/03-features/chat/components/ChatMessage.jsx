@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { ChatMediaCard } from "./ChatMediaCard";
+import { MarkdownRenderer } from "@/02-shared/components";
 
 export function ChatMessage({ message, isFavorite, onToggleFavorite }) {
   const isUser = message.role === "user";
@@ -39,8 +40,12 @@ export function ChatMessage({ message, isFavorite, onToggleFavorite }) {
           </div>
         )}
 
-        <div className={clsx(!isUser ? "px-4 py-2" : "", "whitespace-pre-wrap")}>
-          {message.content}
+        <div className={clsx(!isUser ? "px-4 py-2" : "")}>
+          {isUser ? (
+            <span className="whitespace-pre-wrap">{message.content}</span>
+          ) : (
+            <MarkdownRenderer content={message.content} />
+          )}
         </div>
       </div>
     </div>

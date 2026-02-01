@@ -55,30 +55,34 @@ export function Navbar({ isFavorite, onToggleFavorite }) {
   return (
     <nav
       className={clsx(
-        "fixed top-0 left-0 right-0 z-40 bg-dark/80 backdrop-blur-md border-b transition-shadow",
-        scrolled ? "border-border shadow-lg" : "border-transparent"
+        "fixed top-0 left-0 right-0 z-40 backdrop-blur-md border-b transition-all duration-300",
+        scrolled
+          ? "bg-dark/90 border-border shadow-lg"
+          : "bg-dark/30 border-transparent"
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-6">
+      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link to={HOME} className="text-xl font-bold text-text shrink-0">
           Filmzimmer
         </Link>
 
-        <div className="flex-1 max-w-md relative" ref={dropdownRef}>
-          <Input
-            type="search"
-            placeholder="Search movies, TV shows, people..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onFocus={() => results.length > 0 && setShowDropdown(true)}
-            className="text-sm"
-          />
-          {showDropdown && (
-            <SearchDropdown results={results} onSelect={handleSelect} isFavorite={isFavorite} />
-          )}
+        <div className="flex-1 flex justify-center px-4">
+          <div className="w-full max-w-md relative" ref={dropdownRef}>
+            <Input
+              type="search"
+              placeholder="Search movies, TV shows, people..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => results.length > 0 && setShowDropdown(true)}
+              className="text-sm bg-white/10 border-white/20 placeholder:text-white/50 focus:bg-white/15 focus:border-accent/50"
+            />
+            {showDropdown && (
+              <SearchDropdown results={results} onSelect={handleSelect} isFavorite={isFavorite} />
+            )}
+          </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 shrink-0">
           {[
             { to: HOME, label: "Home" },
             { to: JOURNAL, label: "Journal" },
@@ -87,10 +91,10 @@ export function Navbar({ isFavorite, onToggleFavorite }) {
               key={to}
               to={to}
               className={clsx(
-                "text-sm font-medium transition-colors",
+                "text-sm font-medium px-3 py-1.5 rounded-full transition-all",
                 location.pathname === to
-                  ? "text-accent"
-                  : "text-text-muted hover:text-text"
+                  ? "bg-white/20 text-white"
+                  : "text-white/70 hover:text-white hover:bg-white/10"
               )}
             >
               {label}

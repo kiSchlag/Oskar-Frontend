@@ -10,7 +10,7 @@ export function HeroSection({ onSaveToJournal, isFavorite }) {
 
   if (loading) {
     return (
-      <div className="relative w-full h-[70vh] bg-darker">
+      <div className="relative w-full h-[calc(70vh+4rem)] -mt-16 bg-darker">
         <Skeleton className="w-full h-full" />
       </div>
     );
@@ -23,11 +23,11 @@ export function HeroSection({ onSaveToJournal, isFavorite }) {
   const mediaType = hero.media_type || "movie";
 
   return (
-    <section className="relative w-full h-[70vh] overflow-hidden">
+    <section className="relative w-full h-[calc(70vh+4rem)] -mt-16 overflow-hidden">
       <LazyImage
         src={backdropUrl(hero.backdrop_path)}
         alt={title}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-top"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/60 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-8 max-w-7xl mx-auto">

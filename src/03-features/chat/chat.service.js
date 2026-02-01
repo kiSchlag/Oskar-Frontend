@@ -5,9 +5,9 @@ export function sendMessage(message, sessionId = null, userId = "default") {
 }
 
 export function getSession(sessionId) {
-  return apiFetch(`/chat/session/${sessionId}`);
+  return apiFetch(`/chat/thread/${sessionId}`);
 }
 
 export function deleteSession(sessionId) {
-  return apiDelete(`/chat/session/${sessionId}`);
+  return apiDelete(`/chat/thread/${sessionId}`);
 }
