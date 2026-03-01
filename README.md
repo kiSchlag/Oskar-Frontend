@@ -12,7 +12,7 @@ Frontend for an AI-powered movie and TV show discovery assistant with browsing, 
 
 ## Overview
 
-The [backend](../l14-t12-backend/README.md) provides Oskar, an AI agent that searches real movie data and manages a personal journal. This frontend gives users two ways to discover content: browse visually through trending, popular, and search-driven grids, or open a floating chat widget and ask Oskar directly — "What should I watch tonight?" — and receive a response with a rich media card showing poster, genres, rating, and overview.
+The [backend](https://github.com/kiSchlag/Oskar-Backend.git) provides Oskar, an AI agent that searches real movie data and manages a personal journal. This frontend gives users two ways to discover content: browse visually through trending, popular, and search-driven grids, or open a floating chat widget and ask Oskar directly — "What should I watch tonight?" — and receive a response with a rich media card showing poster, genres, rating, and overview.
 
 The home page surfaces trending movies and TV shows in a hero section and horizontal carousel, followed by popular movie and TV grids and a popular people carousel. Every media card supports hover-to-preview via a floating detail panel that shows rating, overview, genres, and cast — fetched on demand without leaving the page. A search bar in the navbar provides instant multi-search results across movies, TV shows, and people in a dropdown.
 
