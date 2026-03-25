@@ -30,14 +30,20 @@ export function HoverCard({
   const year = date ? date.slice(0, 4) : null;
 
   useEffect(() => {
-    if (!isVisible || !item?.id) return;
+    if (!isVisible || !item?.id) {
+      setDetails(null);
+      setDetailsLoading(false);
+      return;
+    }
 
     const key = `${mediaType}-${item.id}`;
     if (detailsCache.has(key)) {
       setDetails(detailsCache.get(key));
+      setDetailsLoading(false);
       return;
     }
 
+    setDetails(null);
     setDetailsLoading(true);
     const fetchFn =
       mediaType === "movie" ? fetchMovieDetails : fetchTVDetails;
@@ -47,7 +53,9 @@ export function HoverCard({
         detailsCache.set(key, data);
         setDetails(data);
       })
-      .catch(() => {})
+      .catch(() => {
+        setDetails(null);
+      })
       .finally(() => setDetailsLoading(false));
   }, [isVisible, item?.id, mediaType]);
 
